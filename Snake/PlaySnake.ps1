@@ -1,0 +1,3 @@
+python snake.py
+
+pause
