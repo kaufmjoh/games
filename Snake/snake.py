@@ -2,10 +2,17 @@ import pygame
 import random
 
 #DEFINE GAME VARIABLES
+
+#FOOD VARIABLES
 LENGTH_PER_FOOD = 1
 LENGTH_PER_SUPERFOOD = 10
-GAME_SPEED = 10
 SUPERFOOD_PERCENT = 50
+
+FOOD_PER_CYCLE = 3
+
+#GAME VARIABLES
+GAME_SPEED = 10
+
 
 
 # Initialize Pygame
@@ -113,23 +120,31 @@ class Food:
 def main():
     snake = Snake( (SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2) )
 
-    food = Food()
+    food = []
+
+    for i in range(0, FOOD_PER_CYCLE):
+        food.append(Food())
+    #food = Food()
 
     while True:
         screen.fill(BLACK)
         snake.handle_keys()
         snake.move()
 
-        if snake.get_head_position() == food.position:
-            if (food.isSuperFood == 1 ):
-                snake.length += LENGTH_PER_SUPERFOOD
-            else:
-                snake.length += LENGTH_PER_FOOD
+        for i in range (0, FOOD_PER_CYCLE):
 
-            food.change_position()
+            if snake.get_head_position() == food[i].position:
+                if (food[i].isSuperFood == 1 ):
+                    snake.length += LENGTH_PER_SUPERFOOD
+                else:
+                    snake.length += LENGTH_PER_FOOD
+
+                food[i].change_position()
+            
+            food[i].draw(screen)
+
 
         snake.draw(screen)
-        food.draw(screen)
 
 
         pygame.display.update()
